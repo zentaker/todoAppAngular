@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoItemComponent } from "./todos/todo-item.component";
-import { Todo } from './todos/todo.model';
+import { Todo } from './todos/todoStore/todo.model';
 import { Store } from '@ngrx/store';
 import { AppState } from './app.reducer';
 import { CommonModule } from '@angular/common';

@@ -4,7 +4,7 @@ import { TodoListComponent } from "../todo-list.component";
 import { TodoFooterComponent } from "./todo-footer.component";
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
-import { toggleAll } from './todo.actions';
+import { toggleAll } from './todoStore/todo.actions';
 
 @Component({
     selector: 'app-todo-page',
