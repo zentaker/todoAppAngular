@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import { borrar, crear, editar, toggle } from './todo.actions';
-import { Todo } from './models/todo.model';
+import { borrar, crear, editar, toggle, toggleAll } from './todo.actions';
+import { Todo } from './todo.model';
+import { state } from '@angular/animations';
 
 //objetos son pasados por referencia en javascript 
 //no se puede usar push() por que no puedo mutar
@@ -16,6 +17,13 @@ export const todoReducer = createReducer(estadoInicial,
   on(crear, (state, {texto}) => [...state, new Todo(texto)] ),//arreglo para retornar un nuevo arreglo
  
   on(borrar, (state,{id})=> state.filter(todo => todo.id !== id)),// solo estas excluyendo el id que buscas
+
+  on(toggleAll, (state, {completado})=> state.map(todo => {
+    return{
+      ...todo,
+      completado: completado
+    }
+  })),
 
   on(toggle, (state, {id}) => {
     return state.map(todo => {

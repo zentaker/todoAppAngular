@@ -1,14 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { TodoItemComponent } from "../todo-item/todo-item.component";
-import { Todo } from '../models/todo.model';
+import { TodoItemComponent } from "./todos/todo-item.component";
+import { Todo } from './todos/todo.model';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../app.reducer';
+import { AppState } from './app.reducer';
 import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-todo-list',
     standalone: true,
-    templateUrl: './todo-list.component.html',
+    template:`
+    
+    <ul class="todo-list"><!-- 
+   <app-todo-item *ngFor="let todo of todos"></app-todo-item>
+ -->
+
+
+   @for (todo of todos; track $index) {
+      <app-todo-item [todo]="todo"></app-todo-item>
+   }
+
+  </ul> 
+    `,
     styles: ``,
     imports: [TodoItemComponent, CommonModule]
 })

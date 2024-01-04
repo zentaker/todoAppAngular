@@ -1,7 +1,13 @@
+import { Component } from '@angular/core';
 
-    <!-- This footer should hidden by default and shown when there are todos -->
+@Component({
+  selector: 'app-todo-footer',
+  standalone: true,
+  imports: [],
+  template: `
+  
     <footer class="footer">
-        <!-- This should be `0 items left` by default -->
+    
         <span class="todo-count"><strong>0</strong> Tareas pendientes</span>
         <!-- Remove this if you don't implement routing -->
         <ul class="filters">
@@ -18,3 +24,11 @@
         <!-- Hidden if no completed items are left ↓ -->
         <button class="clear-completed">Borrar Completados</button>
       </footer>
+  
+  
+  `,
+  styles: ``
+})
+export class TodoFooterComponent {
+
+}
