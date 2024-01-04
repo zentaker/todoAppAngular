@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../app.reducer';
+import { filtrosValidos } from './filterStore/filtro.actions';
 
 @Component({
   selector: 'app-todo-footer',
@@ -29,6 +32,20 @@ import { Component } from '@angular/core';
   `,
   styles: ``
 })
-export class TodoFooterComponent {
+export class TodoFooterComponent implements OnInit {
+
+  filtroActual: filtrosValidos = 'todos';
+
+  constructor(private store: Store<AppState>){}
+
+  ngOnInit(): void {
+
+    this.store.select('filtro').subscribe(filtro => {
+      console.log(filtro);
+    })
+      
+  }
+
+
 
 }
