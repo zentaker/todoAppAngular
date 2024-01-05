@@ -35,13 +35,14 @@ import { filtrosValidos } from './filterStore/filtro.actions';
 export class TodoFooterComponent implements OnInit {
 
   filtroActual: filtrosValidos = 'todos';
+  filtros: filtrosValidos[]=[];
 
   constructor(private store: Store<AppState>){}
 
   ngOnInit(): void {
 
     this.store.select('filtro').subscribe(filtro => {
-      console.log(filtro);
+      this.filtroActual = filtro;
     })
       
   }
