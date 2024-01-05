@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { borrar, crear, editar, toggle, toggleAll } from './todo.actions';
+import { borrar, crear, editar, limpiarTodos, toggle, toggleAll } from './todo.actions';
 import { Todo } from './todo.model';
 import { state } from '@angular/animations';
 
@@ -16,6 +16,8 @@ export const todoReducer = createReducer(estadoInicial,
   // ..state para extraer los estados y regresalos de manera independiente
   on(crear, (state, {texto}) => [...state, new Todo(texto)] ),//arreglo para retornar un nuevo arreglo
  
+  on(limpiarTodos, state => state.filter(todo => !todo.completado) ),
+
   on(borrar, (state,{id})=> state.filter(todo => todo.id !== id)),// solo estas excluyendo el id que buscas
 
   on(toggleAll, (state, {completado})=> state.map(todo => {

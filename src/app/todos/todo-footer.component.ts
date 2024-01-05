@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { filtrosValidos, setFiltro } from './filterStore/filtro.actions';
 import { CommonModule } from '@angular/common';
+import { limpiarTodos } from './todoStore/todo.actions';
 
 @Component({
   selector: 'app-todo-footer',
@@ -21,7 +22,7 @@ import { CommonModule } from '@angular/common';
           </li>
           }
         </ul>
-        <button class="clear-completed">Limpiar</button>
+        <button (click)="limpiarCompletados()" class="clear-completed">Limpiar</button>
       </footer>
   
   
@@ -29,6 +30,7 @@ import { CommonModule } from '@angular/common';
   styles: ``
 })
 export class TodoFooterComponent implements OnInit {
+
 
   filtroActual: filtrosValidos = 'todos';
   filtros: filtrosValidos[]=['todos','completados','pendientes'];
@@ -53,6 +55,9 @@ export class TodoFooterComponent implements OnInit {
     this.store.dispatch(setFiltro({filtro}));
 
   }
+  limpiarCompletados() {
+    this.store.dispatch(limpiarTodos())
+    }
 
 
 
