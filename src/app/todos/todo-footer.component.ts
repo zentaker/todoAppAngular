@@ -1,31 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
-import { filtrosValidos } from './filterStore/filtro.actions';
+import { filtrosValidos, setFiltro } from './filterStore/filtro.actions';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-todo-footer',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   template: `
   
     <footer class="footer">
-    
-        <span class="todo-count"><strong>0</strong> Tareas pendientes</span>
-        <!-- Remove this if you don't implement routing -->
+        <span class="todo-count"><strong>{{pendientes}}</strong> Pendientes</span>
         <ul class="filters">
-          <li>
-            <a class="selected" href="#/">ToDo's</a>
+          @for (filtro of filtros; track $index) {     
+          <li (click)="cambiarFiltro(filtro)">
+            <a class="selected" href="#/"[class.selected]="filtro === filtroActual">
+            {{filtro | titlecase}}
+          </a>
           </li>
-          <li>
-            <a href="#/active">Activos</a>
-          </li>
-          <li>
-            <a href="#/completed">Completados</a>
-          </li>
+          }
         </ul>
-        <!-- Hidden if no completed items are left ↓ -->
-        <button class="clear-completed">Borrar Completados</button>
+        <button class="clear-completed">Limpiar</button>
       </footer>
   
   
@@ -35,16 +31,27 @@ import { filtrosValidos } from './filterStore/filtro.actions';
 export class TodoFooterComponent implements OnInit {
 
   filtroActual: filtrosValidos = 'todos';
-  filtros: filtrosValidos[]=[];
+  filtros: filtrosValidos[]=['todos','completados','pendientes'];
+
+  pendientes: number=0;
 
   constructor(private store: Store<AppState>){}
 
   ngOnInit(): void {
 
-    this.store.select('filtro').subscribe(filtro => {
-      this.filtroActual = filtro;
+    //saber los todos y los filtrpos
+    this.store.subscribe(state => {
+      //no importa donde se dispare la accion 
+      //mantener el estado actual del filtro, y reaccion frente a los cambios del estado
+      this.filtroActual= state.filtro;
+      //disparar un conteo de cuantos pednientes
+      this.pendientes = state.todos.filter(todo => !todo.completado).length;
     })
       
+  }
+  cambiarFiltro(filtro: filtrosValidos){
+    this.store.dispatch(setFiltro({filtro}));
+
   }
 
 
